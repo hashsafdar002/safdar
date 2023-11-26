@@ -1,0 +1,42 @@
+server:
+  env_name: ${APP_ENV:prod}
+  port: ${PORT:8001}
+  cors:
+    enabled: false
+    allow_origins: ["*"]
+    allow_methods: ["*"]
+    allow_headers: ["*"]
+  auth:
+    enabled: false
+    # python -c 'import base64; print("Basic " + base64.b64encode("secret:key".encode()).decode())'
+    # 'secret' is the username and 'key' is the password for basic auth by default
+    # If the auth is enabled, this value must be set in the "Authorization" header of the request.
+    secret: "Basic c2VjcmV0OmtleQ=="
+
+data:
+  local_data_folder: local_data/private_gpt
+
+ui:
+  enabled: true
+  path: /
+
+llm:
+  mode: local
+
+vectorstore:
+  database: qdrant
+
+qdrant:
+  path: local_data/private_gpt/qdrant
+
+local:
+  llm_hf_repo_id: TheBloke/Mistral-7B-Instruct-v0.1-GGUF
+  llm_hf_model_file: mistral-7b-instruct-v0.1.Q4_K_M.gguf
+  embedding_hf_model_name: BAAI/bge-small-en-v1.5
+
+sagemaker:
+  llm_endpoint_name: huggingface-pytorch-tgi-inference-2023-09-25-19-53-32-140
+  embedding_endpoint_name: huggingface-pytorch-inference-2023-11-03-07-41-36-479
+
+openai:
+  api_key: ${OPENAI_API_KEY:}
